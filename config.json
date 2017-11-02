@@ -1,0 +1,6 @@
+{
+  "ApiKey": "",
+  "Versao": "1",
+  "BaseEndPoint": "https://api.enotasgw.com.br/v",
+  "DefaultContentType": "application/json"
+}
