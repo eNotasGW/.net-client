@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eNotasGW.Client.Lib", "eNotasGW.Client.Lib.csproj", "{348921FA-773D-4F46-A9A9-10C6994AEF6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eNotasGW.Client.Lib", "Lib\eNotasGW.Client.Lib.csproj", "{348921FA-773D-4F46-A9A9-10C6994AEF6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eNotasGWTeste", "..\eNotasGWTeste\eNotasGWTeste.csproj", "{8739FA07-496C-4073-B5B3-0E92D4577703}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eNotasGWTeste", "Teste\eNotasGWTeste.csproj", "{8739FA07-496C-4073-B5B3-0E92D4577703}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
