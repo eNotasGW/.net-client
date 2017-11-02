@@ -14,9 +14,9 @@ var nfe = new NFe()
         cpfCnpj = "11111111111",
         endereco = new eNotasGW.Client.Lib.Models.NFe.Endereco()
         {
-            logradouro = "Rua 01",
-            numero = "112",
-            complemento = "AP 402",
+            logradouro = "Rua Alagoas",
+            numero = "999",
+            complemento = "Centro",
             bairro = "Savassi",
             cep = "85100000",
             uf = "MG",
