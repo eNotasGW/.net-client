@@ -2,7 +2,7 @@
 
 **Emissão de Nota Fiscal**
 
-```
+```C#
 var nfe = new NFe()
 {
     idExterno = null, //opcional - "id de mapeamento com seu sistema"
