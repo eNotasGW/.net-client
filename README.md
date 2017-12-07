@@ -1,5 +1,8 @@
 # eNotasGW C# Client
-
+**Configuração da API KEY**
+```C#
+Config.Configure("sua-APIKey-aqui");
+```
 **Emissão de Nota Fiscal**
 
 ```C#
