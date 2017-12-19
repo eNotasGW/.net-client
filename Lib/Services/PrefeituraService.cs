@@ -104,16 +104,16 @@ namespace eNotasGW.Client.Lib.Services
         /// <param name="nomeCidade">Nome da cidade. Exemplo: São Paulo</param>
         /// <param name="pageNumber">Número da página, sendo 0 o número da primeira página.</param>
         /// <param name="pageSize">Total de itens a serem retornados por página.</param>
-        /// <param name="filter">Filtro para realização da pesquisa. Possíveis campos: descricao. Exemplo: contains(descricao, 'Consultoria')</param>
+        /// <param name="descricaoServico">Filtro para realização da pesquisa. Possíveis campos: descricao. Exemplo: contains(descricao, 'Consultoria')</param>
         /// <returns></returns>
-        public async Task<DataServicoMunicipalLista> ConsultaServicoMunicipalAsync(string uf, string nomeCidade, int pageNumber, int pageSize, string filter = "")
+        public async Task<DataServicoMunicipalLista> ConsultaServicoMunicipalAsync(string uf, string nomeCidade, int pageNumber, int pageSize, string descricaoServico = "")
         {
             try
             {
-                var parameters = new StringBuilder(string.Format("/estados/{0}/cidades/{1}/servicos/?pageNumber={2}&pageSize={3}", uf, nomeCidade, pageNumber.ToString(), pageSize.ToString()));
+                var parameters = new StringBuilder(string.Format("/estados/{0}/cidades/{1}/servicos?pageNumber={2}&pageSize={3}", uf, nomeCidade, pageNumber.ToString(), pageSize.ToString()));
 
-                if (!string.IsNullOrEmpty(filter))
-                    parameters.Append("&filter=contains(descricao,'" + filter + "')");
+                if (!string.IsNullOrEmpty(descricaoServico))
+                    parameters.Append("&filter=contains(descricao,'" + descricaoServico + "')");
 
                 using (var request = new HttpRequestMessage(HttpMethod.Get, string.Format("{0}{1}", string.Concat(_config.BaseEndPoint, _config.Versao), parameters.ToString())))
                 {
@@ -177,7 +177,7 @@ namespace eNotasGW.Client.Lib.Services
         /// <param name="pageNumber">Número da página, sendo 0 o número da primeira página.</param>
         /// <param name="pageSize">Total de itens a serem retornados por página.</param>
         /// <returns></returns>
-        public async Task<DataServicoMunicipalUnificadoLista> ConsultaServicoMunicipalUnificadoAsync(int pageNumber, int pageSize)
+        public async Task<DataServicoMunicipalUnificadoLista> ConsultaCidadesServicoMunicipalUnificadoAsync(int pageNumber, int pageSize)
         {
             try
             {

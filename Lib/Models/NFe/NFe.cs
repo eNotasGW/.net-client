@@ -33,6 +33,8 @@ namespace eNotasGW.Client.Lib.Models.NFe
         }
 
         public string idExterno { get; set; }
+        public int numeroRps { get; set; }
+        public string serieRps { get; set; }
         public bool consumidorFinal { get; set; }
         public string indicadorPresencaConsumidor { get; set; }
         public Servico servico { get; set; }

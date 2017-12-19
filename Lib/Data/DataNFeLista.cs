@@ -1,5 +1,4 @@
-﻿using eNotasGW.Client.Lib.Models;
-using eNotasGW.Client.Lib.Models.Empresa;
+﻿using eNotasGW.Client.Lib.Models.NFe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace eNotasGW.Client.Lib.Data
 {
-    public class DataEmpresaLista
+    public class DataNFeLista
     {
         public int totalRecords { get; set; }
-        public List<Empresa> data { get; set; }
+        public List<NFe> data { get; set; }
     }
 }

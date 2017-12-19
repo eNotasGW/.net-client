@@ -19,8 +19,10 @@ namespace eNotasGWTeste
     class Program
     {
         static string API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-        static string EMPRESA_ID = "00000000-1111-2222-3333-999999999999";
+        //static string EMPRESA_ID = "0A7B8CF7-623D-4D6F-8FC9-6E6E18420100";
+        static string EMPRESA_ID = "aaaaaaaa-bbbb-cccc-dddd-xxxxxxxxxxxx";
         static string NFE_ID = "xxxxxxxx-aaaa-cccc-eeee-xxxxxxxxxxxx";
+        static string NFE_ID_EXTERNO = "55882157-f190-4829-9fae-e25ec6420100";
 
         static void Main(string[] args)
         {
@@ -73,6 +75,16 @@ namespace eNotasGWTeste
             Console.WriteLine("[11] - Consulta serviços municipais");
             Console.WriteLine("");
             Console.WriteLine("[12] - Consulta serviços municipais unificados");
+            Console.WriteLine("");
+            Console.WriteLine("[13] - Consultar notas fiscais");
+            Console.WriteLine("");
+            Console.WriteLine("[14] - Consultar NF por Id Externo");
+            Console.WriteLine("");
+            Console.WriteLine("[15] - Download do XML por Id Externo");
+            Console.WriteLine("");
+            Console.WriteLine("[16] - Download do PDF por Id Externo");
+            Console.WriteLine("");
+            Console.WriteLine("[17] - Cancelar NF por Id Externo");
             Console.WriteLine();
 
             var opcao = Console.ReadLine();
@@ -251,6 +263,8 @@ namespace eNotasGWTeste
                         {
                             idExterno = null, //opcional - "id de mapeamento com seu sistema"
                             ambienteEmissao = NFe.AmbienteEmissao.Homologacao,
+                            numeroRps = 1,
+                            serieRps = "RPS",
                             cliente = new Cliente()
                             {
                                 nome = "Cliente teste",
@@ -469,6 +483,110 @@ namespace eNotasGWTeste
                         if (dataServicos != null)
                         {
                             Console.WriteLine("Total de registros: " + dataServicos.totalRecords.ToString() + "\n\nPressione qualquer tecla pra continuar...");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
+
+                    break;
+
+                case "13":
+
+                    try
+                    {
+                        //Exemplo de como criar o parâmetro filter
+                        //eq = Equals (Igual)
+                        var filter = "status eq 'Autorizada'";
+                        var listaNotas = nfeService.ConsultarNFsAsync(Guid.Parse(EMPRESA_ID), 0, 5, filter).Result;
+
+                        if (listaNotas != null)
+                        {
+                            Console.WriteLine("Total de registros: " + listaNotas.totalRecords.ToString() + "\n\nPressione qualquer tecla pra continuar...");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
+
+                    break;
+
+                case "14":
+
+                    try
+                    {
+                        var dataNFe = nfeService.ConsultarNFporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+
+                        if (dataNFe != null)
+                        {
+                            Console.WriteLine("NF Id Externo: " + dataNFe.idExterno + "\n\nPressione qualquer tecla pra continuar...");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
+
+                    break;
+
+                case "15":
+
+                    try
+                    {
+                        var dataXml = nfeService.DownloadXMLporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+
+                        if (dataXml != null)
+                        {
+                            Console.WriteLine("XML: " + dataXml + "\n\nPressione qualquer tecla pra continuar...");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
+
+                    break;
+
+                case "16":
+
+                    try
+                    {
+                        var pathPDF = @"C:\ENOTAS\";
+
+                        if (!System.IO.Directory.Exists(pathPDF))
+                        {
+                            Console.WriteLine("Diretório não encontrado: " + pathPDF + "\n\nPressione alguma tecla pra continuar...");
+                            Console.ReadKey();
+                            return;
+                        }
+
+                        pathPDF = Path.Combine(@"C:\ENOTAS\", string.Concat(NFE_ID_EXTERNO, ".pdf"));
+                        var dataPDF = nfeService.DownloadPDFporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+
+                        if (dataPDF != null)
+                        {
+                            File.WriteAllBytes(pathPDF, dataPDF);
+                            Console.WriteLine("PDF salvo em: \n" + pathPDF + "\n\nPressione qualquer tecla pra continuar...");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
+
+                    break;
+
+                case "17":
+
+                    try
+                    {
+                        var dataNfeId = nfeService.CancelarNFporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+
+                        if (dataNfeId != null)
+                        {
+                            Console.WriteLine("NFS-e cancelada com suceso: " + dataNfeId.nfeId + "\n\nPressione alguma tecla pra continuar...");
                         }
                     }
                     catch (Exception ex)

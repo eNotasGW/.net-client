@@ -9,7 +9,7 @@ namespace eNotasGW.Client.Lib.Models.Empresa
 {
     public class ConfiguracoesNFSeProducao
     {
-        public int sequencialNFe { get; set; }
+        public int? sequencialNFe { get; set; }
         public string serieNFe { get; set; }
         public int? sequencialLoteNFe { get; set; }
         public string usuarioAcessoProvedor { get; set; }

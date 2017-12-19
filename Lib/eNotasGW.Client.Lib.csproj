@@ -50,6 +50,7 @@
     <Compile Include="Data\DataEmpresaId.cs" />
     <Compile Include="Data\DataNFeId.cs" />
     <Compile Include="Data\DataNFe.cs" />
+    <Compile Include="Data\DataNFeLista.cs" />
     <Compile Include="Data\DataResponse.cs" />
     <Compile Include="Data\DataServicoMunicipalLista.cs" />
     <Compile Include="Data\DataServicoMunicipalUnificadoLista.cs" />
