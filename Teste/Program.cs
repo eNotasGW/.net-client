@@ -19,10 +19,8 @@ namespace eNotasGWTeste
     class Program
     {
         static string API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-        //static string EMPRESA_ID = "0A7B8CF7-623D-4D6F-8FC9-6E6E18420100";
         static string EMPRESA_ID = "aaaaaaaa-bbbb-cccc-dddd-xxxxxxxxxxxx";
         static string NFE_ID = "xxxxxxxx-aaaa-cccc-eeee-xxxxxxxxxxxx";
-        static string NFE_ID_EXTERNO = "55882157-f190-4829-9fae-e25ec6420100";
 
         static void Main(string[] args)
         {
