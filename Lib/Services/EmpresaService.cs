@@ -243,7 +243,7 @@ namespace eNotasGW.Client.Lib.Services
             {
                 var fileName = Guid.NewGuid().ToString() + ".pfx";
                 var streamContent = new ByteArrayContent(byCertificado);
-                streamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { FileName = fileName, Name = "certificado" };
+                streamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { FileName = fileName, Name = "arquivo" };
 
                 var formData = new MultipartFormDataContent();
                 formData.Add(new StringContent(senhaCertificado, Encoding.UTF8, _config.DefaultContentType), "senha");
