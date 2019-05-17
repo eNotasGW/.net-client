@@ -10,6 +10,7 @@ namespace eNotasGW.Client.Lib.Models.NFe
 {
     public class Servico
     {
+        public int? codigoInternoServicoMunicipal { get; set; }
         public string descricao { get; set; }
         public decimal aliquotaIss { get; set; }
         public bool issRetidoFonte { get; set; }
