@@ -32,7 +32,7 @@ namespace eNotasGW.Client.Lib.Models.Empresa
         public decimal? aliquotaIss { get; set; }
         public string descricaoServico { get; set; }
         public bool enviarEmailCliente { get; set; }
-        public ConfiguracoesNFSeHomologacao ConfiguracoesNFSeHomologacao { get; set; }
-        public ConfiguracoesNFSeProducao ConfiguracoesNFSeProducao { get; set; }
+        public ConfiguracoesNFSeHomologacao configuracoesNFSeHomologacao { get; set; }
+        public ConfiguracoesNFSeProducao configuracoesNFSeProducao { get; set; }
     }
 }

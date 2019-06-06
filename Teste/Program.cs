@@ -18,16 +18,17 @@ namespace eNotasGWTeste
 {
     class Program
     {
-        static string API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-        static string EMPRESA_ID = "aaaaaaaa-bbbb-cccc-dddd-xxxxxxxxxxxx";
-        static string NFE_ID = "xxxxxxxx-aaaa-cccc-eeee-xxxxxxxxxxxx";
+        private const string ApiKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; //Configure aqui a sua API Key
+        private const string EmpresaId = "00000000-0000-0000-0000-000000000000";          //Configure aqui o GUID da sua empresa.
+        private const string NfeId = "00000000-0000-0000-0000-000000000000";              //Informe o GUID da sua NFE
+        private const string NfeIdExterno = "xxxxxxxx";                                   //Informe o ID externo da sua NFE
 
         static void Main(string[] args)
         {
             Console.WriteLine("eNotasGW");
             Console.WriteLine("Informe sua Api Key:");
 
-            var apiKey = Console.ReadLine();
+            var apiKey = ApiKey;
 
             if (string.IsNullOrEmpty(apiKey))
             {
@@ -115,7 +116,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var dataEmpresa = empService.ConsultarEmpresaAsync(Guid.Parse(EMPRESA_ID)).Result;
+                        var dataEmpresa = empService.ConsultarEmpresaAsync(Guid.Parse(EmpresaId)).Result;
 
                         if (dataEmpresa != null)
                         {
@@ -137,7 +138,7 @@ namespace eNotasGWTeste
                     {
                         var empresa = new Empresa()
                         {
-                            id = Guid.Parse(EMPRESA_ID), //informar apenas se quiser atualizar uma empresa existente, se for omitido cria uma nova empresa.
+                            id = Guid.Parse(EmpresaId), //informar apenas se quiser atualizar uma empresa existente, se for omitido cria uma nova empresa.
                             cnpj = "99999999999999",     //sem formatação
                             inscricaoMunicipal = "999999999",
                             inscricaoEstadual = null,
@@ -164,7 +165,7 @@ namespace eNotasGWTeste
                             codigoServicoMunicipal = "010700188", //código do serviço municipal padrão para emissão de NFS-e
                             descricaoServico = "SUPORTE TECNICO EM INFORMATICA, INCLUSIVE INSTALACAO, CONFIGURACAO E MANUTENCAO DE PROGRAMAS DE COMPUTACAO E BANCOS DE DADOS", //Descrição do serviço municipal padrão para emissão de NFS-e (utilizado apenas na impressão da NFS-e)
                             aliquotaIss = 2,
-                            ConfiguracoesNFSeProducao = new ConfiguracoesNFSeProducao()
+                            configuracoesNFSeProducao = new ConfiguracoesNFSeProducao()
                             {
                                 sequencialNFe = 1,
                                 serieNFe = "1",
@@ -172,7 +173,7 @@ namespace eNotasGWTeste
                                 tokenAcessoProvedor = null,
                                 usuarioAcessoProvedor = null
                             },
-                            ConfiguracoesNFSeHomologacao = new ConfiguracoesNFSeHomologacao()
+                            configuracoesNFSeHomologacao = new ConfiguracoesNFSeHomologacao()
                             {
                                 sequencialNFe = 1,
                                 serieNFe = "1",
@@ -193,22 +194,22 @@ namespace eNotasGWTeste
                         if (caracteristicaPrefeitura.usaItemListaServico)
                             empresa.itemListaServicoLC116 = "1.07";
 
-                        var configProd = empresa.ConfiguracoesNFSeProducao;
-                        var configHomologa = empresa.ConfiguracoesNFSeHomologacao;
+                        var configProd = empresa.configuracoesNFSeProducao;
+                        var configHomologa = empresa.configuracoesNFSeHomologacao;
 
                         if (caracteristicaPrefeitura.tipoAutenticacao == (int)CaracteristicaPrefeitura.TipoAutenticacao.UsuarioESenha)
                         {
-                            empresa.ConfiguracoesNFSeProducao.usuarioAcessoProvedor = "Usuario";
-                            empresa.ConfiguracoesNFSeProducao.senhaAcessoProvedor = "Senha";
+                            empresa.configuracoesNFSeProducao.usuarioAcessoProvedor = "Usuario";
+                            empresa.configuracoesNFSeProducao.senhaAcessoProvedor = "Senha";
 
                             //opcional, preencher apenas se for emitir em ambiente de homologação
-                            empresa.ConfiguracoesNFSeHomologacao.usuarioAcessoProvedor = "Usuario";
-                            empresa.ConfiguracoesNFSeHomologacao.senhaAcessoProvedor = "Senha";
+                            empresa.configuracoesNFSeHomologacao.usuarioAcessoProvedor = "Usuario";
+                            empresa.configuracoesNFSeHomologacao.senhaAcessoProvedor = "Senha";
                         }
                         else if (caracteristicaPrefeitura.tipoAutenticacao == (int)CaracteristicaPrefeitura.TipoAutenticacao.Token)
                         {
-                            empresa.ConfiguracoesNFSeProducao.tokenAcessoProvedor = "token";
-                            empresa.ConfiguracoesNFSeHomologacao.tokenAcessoProvedor = "token";
+                            empresa.configuracoesNFSeProducao.tokenAcessoProvedor = "token";
+                            empresa.configuracoesNFSeHomologacao.tokenAcessoProvedor = "token";
                         }
 
                         //-----------------------------
@@ -291,7 +292,7 @@ namespace eNotasGWTeste
                             valorTotal = 10
                         };
 
-                        var dataNfeId = nfeService.EmitirNFAsync(Guid.Parse(EMPRESA_ID), nfe).Result;
+                        var dataNfeId = nfeService.EmitirNFAsync(Guid.Parse(EmpresaId), nfe).Result;
 
                         if (dataNfeId != null)
                         {
@@ -309,7 +310,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var dataNfeId = nfeService.CancelarNFAsync(Guid.Parse(EMPRESA_ID), Guid.Parse(NFE_ID)).Result;
+                        var dataNfeId = nfeService.CancelarNFAsync(Guid.Parse(EmpresaId), Guid.Parse(NfeId)).Result;
 
                         if (dataNfeId != null)
                         {
@@ -337,7 +338,7 @@ namespace eNotasGWTeste
                         }
 
                         var byLogo = File.ReadAllBytes(pathLogo);
-                        var dataLogo = empService.UploadLogo(Guid.Parse(EMPRESA_ID), byLogo).Result;
+                        var dataLogo = empService.UploadLogo(Guid.Parse(EmpresaId), byLogo).Result;
 
                         if (dataLogo)
                         {
@@ -355,7 +356,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        Config.Configure(API_KEY);
+                        Config.Configure(ApiKey);
 
                         Console.WriteLine("Chave da Api configurada com sucesso!\n\nPressione alguma tecla pra continuar...");
                     }
@@ -372,7 +373,7 @@ namespace eNotasGWTeste
                     {
                         var config = new ConfiguracaoApi()
                         {
-                            ApiKey = API_KEY,
+                            ApiKey = ApiKey,
                             Versao = "1",
                             BaseEndPoint = "https://api.enotasgw.com.br/v",
                             DefaultContentType = "application/json"
@@ -393,7 +394,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var xml = nfeService.DownloadXMLAsync(Guid.Parse(EMPRESA_ID), Guid.Parse(NFE_ID)).Result;
+                        var xml = nfeService.DownloadXMLAsync(Guid.Parse(EmpresaId), Guid.Parse(NfeId)).Result;
 
                         if (!string.IsNullOrEmpty(xml))
                         {
@@ -411,7 +412,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var dataNFe = nfeService.ConsultarNFAsync(Guid.Parse(EMPRESA_ID), Guid.Parse(NFE_ID)).Result;
+                        var dataNFe = nfeService.ConsultarNFAsync(Guid.Parse(EmpresaId), Guid.Parse(NfeId)).Result;
 
                         if (dataNFe != null)
                         {
@@ -438,8 +439,8 @@ namespace eNotasGWTeste
                             return;
                         }
 
-                        pathPDF = Path.Combine(@"C:\ENOTAS\", string.Concat(NFE_ID, ".pdf"));
-                        var dataPDF = nfeService.DownloadPDFAsync(Guid.Parse(EMPRESA_ID), Guid.Parse(NFE_ID)).Result;
+                        pathPDF = Path.Combine(@"C:\ENOTAS\", string.Concat(NfeId, ".pdf"));
+                        var dataPDF = nfeService.DownloadPDFAsync(Guid.Parse(EmpresaId), Guid.Parse(NfeId)).Result;
 
                         if (dataPDF != null)
                         {
@@ -476,7 +477,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var dataServicos = prefService.ConsultaServicoMunicipalUnificadoAsync(1, 5).Result;
+                        var dataServicos = prefService.ConsultaCidadesServicoMunicipalUnificadoAsync(1, 5).Result;
 
                         if (dataServicos != null)
                         {
@@ -497,7 +498,7 @@ namespace eNotasGWTeste
                         //Exemplo de como criar o parâmetro filter
                         //eq = Equals (Igual)
                         var filter = "status eq 'Autorizada'";
-                        var listaNotas = nfeService.ConsultarNFsAsync(Guid.Parse(EMPRESA_ID), 0, 5, filter).Result;
+                        var listaNotas = nfeService.ConsultarNFsAsync(Guid.Parse(EmpresaId), 0, 5, filter).Result;
 
                         if (listaNotas != null)
                         {
@@ -515,7 +516,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var dataNFe = nfeService.ConsultarNFporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+                        var dataNFe = nfeService.ConsultarNFporIdExternoAsync(Guid.Parse(EmpresaId), NfeIdExterno).Result;
 
                         if (dataNFe != null)
                         {
@@ -533,7 +534,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var dataXml = nfeService.DownloadXMLporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+                        var dataXml = nfeService.DownloadXMLporIdExternoAsync(Guid.Parse(EmpresaId), NfeIdExterno).Result;
 
                         if (dataXml != null)
                         {
@@ -560,8 +561,8 @@ namespace eNotasGWTeste
                             return;
                         }
 
-                        pathPDF = Path.Combine(@"C:\ENOTAS\", string.Concat(NFE_ID_EXTERNO, ".pdf"));
-                        var dataPDF = nfeService.DownloadPDFporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+                        pathPDF = Path.Combine(@"C:\ENOTAS\", string.Concat(NfeIdExterno, ".pdf"));
+                        var dataPDF = nfeService.DownloadPDFporIdExternoAsync(Guid.Parse(EmpresaId), NfeIdExterno).Result;
 
                         if (dataPDF != null)
                         {
@@ -580,7 +581,7 @@ namespace eNotasGWTeste
 
                     try
                     {
-                        var dataNfeId = nfeService.CancelarNFporIdExternoAsync(Guid.Parse(EMPRESA_ID), NFE_ID_EXTERNO).Result;
+                        var dataNfeId = nfeService.CancelarNFporIdExternoAsync(Guid.Parse(EmpresaId), NfeIdExterno).Result;
 
                         if (dataNfeId != null)
                         {
